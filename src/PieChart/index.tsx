@@ -77,9 +77,13 @@ export const PieChart = (props: propTypes) => {
   const radius = props.radius || 120;
   const extraRadiusForFocused = props.extraRadiusForFocused || radius / 10;
   const pi = props.semiCircle ? Math.PI / 2 : Math.PI;
-  const [selectedIndex, setSelectedIndex] = useState(
-    props.data.findIndex(item => item.focused === true),
-  );
+  const selectedIndex = props?.selectedIndex2;
+  const setSelectedIndex = props?.setSelectedIndex2 ;
+
+  // const {selectedIndex ,setSelectedIndex = () => {}} = props
+  // const [selectedIndex, setSelectedIndex] = useState(
+  //   props.data.findIndex(item => item.focused === true),
+  // );
   let startAngle = props.initialAngle || (props.semiCircle ? -pi : 0);
   let total = 0;
   props.data.forEach(item => {
@@ -131,8 +135,6 @@ export const PieChart = (props: propTypes) => {
             initialAngle={startAngle}
             showText={false}
             innerRadius={props.innerRadius || radius / 2.5}
-            isBiggerPie
-            setSelectedIndex={setSelectedIndex}
           />
         </View>
       )}

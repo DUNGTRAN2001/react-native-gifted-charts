@@ -53,7 +53,6 @@ type propTypes = {
   selectedIndex?: number;
   setSelectedIndex?: Function;
   onLabelPress?: Function;
-  isBiggerPie?: Boolean
 };
 type itemType = {
   value: number;
@@ -143,9 +142,7 @@ export const PieChartMain = (props: propTypes) => {
   let minShiftX = 0,
     maxShiftX = 0,
     minShiftY = 0,
-    maxShiftY = 0,
-    total = 0;
-    
+    maxShiftY = 0;
   data.forEach((item: any) => {
     total += item.value;
     if (item.shiftX || item.shiftY) {
@@ -175,7 +172,7 @@ export const PieChartMain = (props: propTypes) => {
   let cx = radius,
     cy = radius;
 
-  total =
+  let total =
     data && data.length
       ? data.map(item => item.value).reduce((v, a) => v + a)
       : 0;
@@ -313,7 +310,7 @@ export const PieChartMain = (props: propTypes) => {
                     props.onPress(item, index);
                   }
                   if (props.focusOnPress) {
-                    if (props.selectedIndex === index || props.isBiggerPie) {
+                    if (props.selectedIndex === index) {
                       if (toggleFocusOnPress) {
                         props.setSelectedIndex(-1);
                       }
@@ -374,10 +371,11 @@ export const PieChartMain = (props: propTypes) => {
             // console.log('ax', ax);
             // console.log('ay', ay);
             return (
-              <React.Fragment key={index}>
+              <>
                 {/* <Line x1={mx} x2={cx} y1={my} y2={cy} stroke="black" /> */}
                 {showTextBackground && (
                   <Circle
+                    key={index + 'b'}
                     cx={x}
                     cy={y - (item.textSize || textSize) / 4}
                     r={
@@ -443,7 +441,7 @@ export const PieChartMain = (props: propTypes) => {
                   }}>
                   {item.text || (showValuesAsLabels ? item.value + '' : '')}
                 </SvgText>
-              </React.Fragment>
+              </>
             );
           })}
       </Svg>
